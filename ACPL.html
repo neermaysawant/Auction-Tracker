@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACPL Auction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1e1e1e;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            background: #2c2c2c;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2);
+        }
+        .remaining-purse {
+            text-align: right;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            border: none;
+            font-size: 16px;
+        }
+        input {
+            background: #333;
+            color: white;
+        }
+        button {
+            background: #ff9800;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover {
+            background: #e68900;
+        }
+        .boughtPlayers {
+            margin-top: 20px;
+            text-align: left;
+        }
+        .player-entry {
+            background: #444;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="remaining-purse">Remaining Purse: ₹<span id="purse">500000</span></div>
+        <div class="buyForm">
+            <input type="text" id="playerName" placeholder="Player Name">
+            <input type="number" id="playerPrice" placeholder="Bought At" min="0">
+            <button onclick="buyPlayer()">Purchase</button>
+        </div>
+        <div class="boughtPlayers" id="boughtPlayers">
+            <h3>Players Bought</h3>
+        </div>
+    </div>
+    <script>
+        let purse = 500000;
+        function buyPlayer() {
+            let name = document.getElementById("playerName").value;
+            let price = parseInt(document.getElementById("playerPrice").value);
+            if (name && price && price <= purse) {
+                purse -= price;
+                document.getElementById("purse").innerText = purse;
+                let playerDiv = document.createElement("div");
+                playerDiv.className = "player-entry";
+                playerDiv.innerText = `${name} - ₹${price}`;
+                document.getElementById("boughtPlayers").appendChild(playerDiv);
+                document.getElementById("playerName").value = "";
+                document.getElementById("playerPrice").value = "";
+            } else {
+                alert("Invalid input or not enough funds!");
+            }
+        }
+    </script>
+</body>
+</html>
